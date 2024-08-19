@@ -98,6 +98,40 @@
 		initFeed();
 		closeOptionMenu();
 	}
+
+	async function addItem() {
+		let display_name = prompt('Item name');
+		if (display_name == null) return;
+
+		let long_description = prompt('Item description');
+		if (long_description == null) return;
+
+		let price = prompt('Item price');
+		if (price == null) return;
+
+		let quantity_in_stock = prompt('Current item stock quantity');
+		if (quantity_in_stock == null) return;
+
+		let thumbnail = prompt('Item thumbnail URL');
+		if (thumbnail == null) return;
+
+		let category = prompt('Item category');
+		if (category == null) return;
+
+		await fetch('/api/admin', {
+			credentials: 'include',
+			method: 'put',
+			body: JSON.stringify({
+				display_name: display_name,
+				long_description: long_description,
+				price: price,
+				quantity_in_stock: quantity_in_stock,
+				thumbnail: thumbnail,
+				category: category
+			})
+		});
+		initFeed();
+	}
 </script>
 
 {#if data.is_admin}
@@ -131,6 +165,11 @@
 				class="bg-[#14538a] capitalize"
 				on:click={(e) => acceptInput('quantity_in_stock', 'number', e.currentTarget)}
 				><span>edit stock quantity</span></button
+			>
+			<button
+				class="bg-[#14538a] capitalize"
+				on:click={(e) => acceptInput('thumbnail', 'text', e.currentTarget)}
+				><span>edit thumbnail url</span></button
 			>
 			<div class="p-0 flex gap-1 *:min-w-max">
 				<button
@@ -196,9 +235,10 @@
 			<p class="p-1 px-2 text-sm sm:text-md md:text-lg h-max my-auto">
 				You're currently logged in as an admin
 			</p>
-			<div class="flex flex-wrap justify-end w-3/12 lg:w-2/12">
-				<button class="p-1 bg-gray-700/75 px-2 text-xs sm:text-sm md:text-md w-full"
-					>Add item</button
+			<div class="flex flex-wrap justify-end w-3/12 lg:w-2/12 lg:border-l-0 border-l-[1px]">
+				<button
+					on:click={addItem}
+					class="p-1 bg-gray-700/75 px-2 text-xs sm:text-sm md:text-md w-full">Add item</button
 				>
 				<button
 					on:click={(e) => window.location.assign('/admin')}
@@ -218,7 +258,7 @@
 						class="w-2/3 sm:max-w-52 lg:max-w-60 overflow-clip bg-[#B83B5E]/75 transition-all duration-100 ease-out cursor-pointer hover:shadow-[1px_1px_0_#B83B5E] shadow-[3px_3px_0_#B83B5E] text-white backdrop-blur-lg"
 					>
 						<div class="w-full sm:max-w-60 h-32 overflow-clip">
-							<img class="h-max w-max mx-auto" src={item.thumbnail} alt="" />
+							<img class="h-full w-full mx-auto" src={item.thumbnail} alt="" />
 						</div>
 						<div class="grid gap-2 p-1">
 							<h1 class="break-words w-max">{item.display_name}</h1>
@@ -232,7 +272,7 @@
 						class="w-2/3 sm:max-w-52 lg:max-w-60 overflow-clip bg-[#B83B5E]/75 transition-all duration-100 ease-out cursor-pointer hover:shadow-[1px_1px_0_#B83B5E] shadow-[3px_3px_0_#B83B5E] text-white backdrop-blur-lg"
 					>
 						<div class="w-full sm:max-w-60 h-32 overflow-clip">
-							<img class="h-max w-max mx-auto" src={item.thumbnail} alt="" />
+							<img class="h-full w-full mx-auto" src={item.thumbnail} alt="" />
 						</div>
 						<div class="grid gap-2 p-1">
 							<h1 class="break-words">{item.display_name}</h1>

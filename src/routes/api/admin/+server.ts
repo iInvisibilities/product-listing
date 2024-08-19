@@ -12,13 +12,21 @@ export async function PUT({ request }) {
 		if (!body.category) {
 			return new Response('Bad request!', { status: 400 });
 		}
+
+		body['price'] = parseFloat(body['price']);
+		body['quantity_in_stock'] = parseInt(body['quantity_in_stock']);
+
+		if (Number.isNaN(body['price']) || Number.isNaN(body['quantity_in_stock']))
+			return new Response('Bad request!', { status: 400 });
+
 		let categoryCollection = await collection(body.category);
 		let result = await categoryCollection.insertOne({
 			display_name: body.display_name,
 			long_description: body.long_description,
 			price: body.price,
 			quantity_in_stock: body.quantity_in_stock,
-			thumbnail: body.thumbnail
+			thumbnail: body.thumbnail,
+			category: body.category
 		});
 		return json({ new_id: result.insertedId });
 	} catch (error) {

@@ -24,9 +24,7 @@
 		Please navigate back to <a class="underline underline-offset-4" href="/">home</a>
 	</p>
 {:else}
-	<div
-		class="w-full h-max absolute inset-y-0 md:my-auto grid items-center justify-center gap-5 md:px-20"
-	>
+	<div class="w-full h-max absolute md:mt-52 grid items-center justify-center gap-5 md:px-20">
 		<img
 			class="w-full lg:w-[510px] h-auto max-h-[340px] overflow-clip"
 			src={data.thumbnail}
@@ -56,7 +54,7 @@
 					contenteditable="false"
 					bind:this={cart_btn}
 					on:click={addToCart}
-					class="w-full md:w-40 bg-[#6A2C70] text-[#EEECDA] px-2 py-1 transition-all duration-200 ease-out shadow-[0px_0px_0px_#F08A5D] hover:shadow-[3px_3px_0px_#F08A5D] active:scale-95 active:shadow-[1px_1px_0px_#F08A5D]"
+					class="w-full md:w-40 bg-[#6A2C70] text-[#EEECDA] px-2 py-3 md:py-1 transition-all duration-200 ease-out shadow-[0px_0px_0px_#F08A5D] hover:shadow-[3px_3px_0px_#F08A5D] active:scale-95 active:shadow-[1px_1px_0px_#F08A5D]"
 					>Add to cart</button
 				>
 			</div>
